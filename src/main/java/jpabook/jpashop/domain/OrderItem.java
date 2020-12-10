@@ -1,13 +1,16 @@
 package jpabook.jpashop.domain;
 
 import jpabook.jpashop.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
     @Id @GeneratedValue
@@ -24,4 +27,27 @@ public class OrderItem {
 
     private int orderPrice; //주문가격
     private int count; // 주문수량량
+
+    //이렇게 해줘야지 왜냐하면 생성하는 방법이 여러가지면 안돼 그러나 lombok 에서 더 간단한 에노테이션 형식으로 제공
+//    protected OrderItem() {
+//    }
+
+    //==생성 메서드==//
+    public static OrderItem createOrderItem(Item item,int orderPrice, int count){
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setOrderPrice(orderPrice);
+        orderItem.setCount(count);
+
+        item.removeStock(count);
+        return orderItem;
+    }
+    //==비즈니스로직==//
+    public void cancel(){
+        getItem().addStock(count);
+    }
+
+    public int getTotalPrice(){
+        return getCount()*getOrderPrice();
+    }
 }
