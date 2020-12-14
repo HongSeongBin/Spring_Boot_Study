@@ -17,8 +17,7 @@ import java.util.List;
 public abstract class Item {
 
     @Id
-    @GeneratedValue
-    @Column(name = "item_id")
+    @GeneratedValue @Column(name = "item_id")
     private Long id;
 
     private String name;
