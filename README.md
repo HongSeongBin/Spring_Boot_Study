@@ -1,5 +1,103 @@
 # Spring_Boot_Study
 
+## 최종정리
+
+#### 프로젝트 생성
+
+: 스프링 부트 스타터(start.spring.io) 를 이용하면 손쉽게 환경을 셋팅할 수 있어.
+ 
+ Gradle로 생성할지 Maven으로 생성할지는 본인의 자유이나 요즈음 Gradle을 자주 사용한다고 함.
+ 
+ dependency에 추가하고자 하는 라이브러리들을 찾아서 추가해주면 돼.
+ 
+ <br/>
+ 
+ 
+ 
+ #### lombok
+ 
+ : lombok을 이용하면 기존에 생성해야했던 코드들에 대해 어노테이셔만 사용해줌으로써 사용에 편리성을 제공받을 수 있어
+ 
+   @Getter, @Setter : 흔히 클래스의 멤버변수는 private으로 선언한 후 getter와 setter함수를 정의하여 주는데 이때 lombok을 이용하여 클래스 상단에 어노테이션을 넣어주면 따로 getter, setter 구현할 필요가 없어.
+   
+ <br/>
+ 
+ 
+ 
+ #### IntelliJ Graddle 대신에 자바 직접 실행
+ 
+ : preferences -> build,execution,deployment -> build tools -> gradle -> build and run using: -> IntelliJ IDEA -> Run tests using: Gradle -> IntelliJ IDEA
+ 
+  최근 IntelliJ 버전은 Gradle로 실행하는 것이 기본설정인데 위 처럼 설정을 해주면 자바로 바로 실행해서 실행속도가 더 빠르다고 함.
+  
+  <br/>
+  
+  
+ 
+ #### H2 Database
+ 
+ : 처음 사용해봤는데 간단하게 혼자서 테스트하는 용도나 토이프로젝트에서 사용하기에 매우 좋은 것 같음. 적은 용량에 웹 콘솔을 이용할 수 있는 장점이 있네.
+ 
+ <br/>
+ 
+ 
+ 
+ #### hibernate 설정
+ 
+ : 일반적으로 jpa는 크게 인터페이스라 생각하면 되고 세세한 구현은 hibernate라는 녀석이 한데. jpa를 이용하면 쿼리를 직접 날리지 않아도 되자나. 내부에서 알아서 만들어서 날려주니까!!
+  
+  하지만 프로젝트를 진행하다보면 이를 눈으로 확인하고 싶을 때가 많지.
+  
+  -> application.yml -> jpa : properties : hibernate: show_sql : true (혹은 format_sql : true)로 설정!! format_sql은 쿼리 뿐 아니라 sql 쿼리에 들어가는 인자까지 보여준데.
+  
+  <br/>
+  
+  
+  
+  #### 전체적인 구조
+  
+  : 음.. 지금까지 공부한 범위 내에서는 크게 controller, service, domain, repository 로 이루어진 구조가 큰 구조였어. controller는 느끼기에 라우팅을 위한 용도 같았고 repository는 database에 직접적으로 접근하는 로직, domain은 entity, service가 실제 서비스 기능구현 담당인 느낌이었고 해당 부분들은 가각 @Controller, @Service, @Entity, @Repository 어노테이션을 이용해서 spring boot가 관리할 수 있게 해줄 수 있었어
+  
+  <br/>
+  
+  
+  
+  #### 설계시 주의 사항
+  
+  : 도메인 모델을 설계하다보면 다대다관계가 발생할 수 있는데 이는 테이블 설계 단계에서 하나의 테이블을 더 생성해주어 일대다, 다대일 관계로 풀어서 설계해주어야해
+
+
+   양방향 관계일 경우 주인을 정해주어야 하는데 일반적으로 외래키가 있는 녀석을 연관관계의 주인으로 정하는 것이 좋데!! 연관관계의 주인은 단순이 외래키를 누가 관리하냐의 문제이지 비즈니스상 우위에 있다고 주인으로 정하면 안돼.
+   
+   <br/>
+   
+   
+   
+  
+ #### Entity 설계시
+ 
+ : pk로 잡을 녀석의 선언 위에 @Id를 해주면 돼. 참고로 @GeneratedValue를 이용할경우 알아서 pk 값을 생성해서 넣어주고 @Column(name = "ooo") 형태로 칼럼네임도 내가 지정해 줄 수 있어.
+ 
+<br/>
+
+
+
+#### 값 타입
+
+: 값 타입은 변경 불가능하게 설계해야 해. @Embeddable 을 클래스 상단에 붙임과 동시에 주의해야할 것은 생성자에서 값을 모두 초기화해서 변경 불가능한 클래스를 만드는거야. 이때 기본 생성자의 경우 protected으로 내용없는 녀석을 만들어둬야해. public 도 상관없으나 protected가 조금 더 안전한 코드래.
+
+<br/>
+
+
+
+#### 지연로딩
+
+: 모든 연관관계는 지연로딩(LAZY)으로 설정하는게 좋데!! 즉시로딩
+
+
+
+
+
 
 ### 1210 Study
 <br/>
